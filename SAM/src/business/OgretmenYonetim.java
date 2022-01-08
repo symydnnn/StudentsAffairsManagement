@@ -307,7 +307,7 @@ public class OgretmenYonetim extends Yonetim implements IOgretmen{
             preparedStatement.setInt(2, finali);
             float ortalama = (yariyil+finali)/2;
             preparedStatement.setFloat(3, ortalama);
-            if (finali == -1){ basari = "FD";}
+            if (finali == -1){ basari = "FZ";}
             else if(finali < 35) { basari = "FF";}
             else{
                 if(ortalama > 90) { basari = "AA";}

@@ -83,6 +83,8 @@ public class FMemur extends javax.swing.JFrame {
                 else
                     durum = "Onaylı";
                 String link = belgeList.get(i).getLink();
+                if( link != null)
+                    link = "link";
                 String date = belgeList.get(i).getDate();
                 Object [] data = {idRequest, idStudent,documentType,instutation,content,durum,link,date};
                 model.addRow(data);
@@ -992,27 +994,25 @@ public class FMemur extends javax.swing.JFrame {
         int idRequest = Integer.parseInt(belgeTalepTable.getModel().getValueAt(row, 0).toString());
         int idStudent = Integer.parseInt(belgeTalepTable.getModel().getValueAt(row, 1).toString());
         String belgeTip = belgeTalepTable.getModel().getValueAt(row, 2).toString();
-        String link =   belgeTalepTable.getModel().getValueAt(row, 6).toString();  ///belge oluşturup linklerini ata
+        System.out.println("idRequest: "+idRequest+ " idStudent: "+ idStudent + " Belge tip: "+belgeTip);
         if (yanit ==JOptionPane.YES_OPTION){
             memur.belgeOnay(idRequest);
-            if(belgeTip == "Transkript"){
-                memur.transkriptYazdir(new Ogrenci(idStudent));
-                
+            if(belgeTip.equals("Transkript")){
+                System.out.println("Transkript Oluşturuluyor");
+                memur.transkriptYazdir(new Ogrenci(idStudent),idRequest);
             }
-            else if(belgeTip == "Disiplin Belgesi"){
-                memur.StajZorunlulugu(idStudent);
+            else if(belgeTip.equals("Disiplin Belgesi")){
+                System.out.println("Disiplin belgesi Olusturuluyor");
+                memur.StajZorunlulugu(idStudent,idRequest);
             }
-            else if(belgeTip == "Ogrenci Belgesi"){
-                memur.ogrenciBelgesiYazdir(new Ogrenci(idStudent));
+            else if(belgeTip.equals("Ogrenci Belgesi")){
+                System.out.println("Ogrenci belgesi Olusturuluyor");
+                memur.ogrenciBelgesiYazdir(new Ogrenci(idStudent),idRequest);
             }
-            else if(belgeTip == "Staj Zorunluluk Belgesi"){
-                memur.StajZorunlulugu(idStudent);
+            else if(belgeTip.equals("Staj Zorunluluk Belgesi")){
+                System.out.println("Staj zorunluluk belgesi olusturuluyor");
+                memur.StajZorunlulugu(idStudent,idRequest);
             }
-            
-            
-            
-            
-            
             onayMesaj.setForeground(Color.green);
             onayMesaj.setText("Belge onaylandı. Belge oluşturuldu.");
             int rows = model.getRowCount(); 
@@ -1046,7 +1046,7 @@ public class FMemur extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 int idNo=0;
-                new FMemur(402).setVisible(true);
+                new FMemur(idNo).setVisible(true);
             }
         });
     }

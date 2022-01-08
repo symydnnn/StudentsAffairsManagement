@@ -7,6 +7,7 @@ import entities.Ders;
 import entities.Duyuru;
 import entities.Ogrenci;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -189,5 +190,88 @@ public class Yonetim extends Birimler{
     
     public ArrayList<Ders> fakulte(int idNo){  throw new UnsupportedOperationException(); }
     
+    
+    public ArrayList<Ders> transkpritHazirla(int idStudent){
+        ArrayList<Ders> tkList = new ArrayList<Ders>(); 
+        String sorgu = "SELECT * FROM schoolm.section as s, schoolm.lectures as l , schoolm.student as st where l.idLectures = s.idLectures and s.idStudent = st.idStudent and s.idStudent =" +idStudent+";";
+        if(con==null){
+            con = db.BaglantiKontrol();
+        }
+        try{
+            Statement stmt=con.createStatement();
+            ResultSet rs = stmt.executeQuery(sorgu);
+            
+            while (rs.next()){
+                int idNo = rs.getInt("idLectures");
+                String lectureName = rs.getString("lectureName");
+                String nameSurname = rs.getString("nameSurname");
+                int midterm = rs.getInt("midterm");
+                int finali = rs.getInt("final");
+                float mean = rs.getFloat("mean");
+                String grade = rs.getString("grade");
+                float GANO = rs.getFloat("GANO");
+                int credit = rs.getInt("credit");
+                tkList.add(new Ders(nameSurname, lectureName, credit, midterm, finali, mean, grade, idNo));
+            }
+            return tkList;
+        }catch (SQLException ex){
+            System.out.println(ex);
+                return null;
+        }
+    
+    }
+    
+    public void ganoHesapla(int idStudent){
+        PreparedStatement preparedStatement = null;
+        float gano,notu, ortalama, puan = 0;
+        String harfliNot = null;
+        int i = 0, credit=0, toplamKredi = 0;        
+        ArrayList<Ders> notlar = new ArrayList<Ders>(); 
+        notlar = transkpritHazirla(idStudent);
+        if (notlar != null){
+            for(Ders ders : notlar){
+                harfliNot = notlar.get(i).getGrade();
+                notu = harfliNotDonustur(harfliNot);
+                if (notu != -2){
+                credit = notlar.get(i).getCredit();
+                puan =puan + (notu*credit);
+                toplamKredi += credit;
+                System.out.println("Harf: "+harfliNot + " notu: "+ notu + " kredi : "+ credit + " puan: "+ puan);
+                i++;}
+            }
+        }
+        gano = puan/toplamKredi;
+        System.out.println("GANO: "+gano);
+        
+        if(con==null){
+            System.out.println("Belge hazirlaniyor..");
+            con = db.BaglantiKontrol();
+        }
+        String sql2 = "Update schoolm.student set GANO = ? where idStudent = ?";
+        try{
+            preparedStatement = con.prepareStatement(sql2);
+            preparedStatement.setFloat(1, gano);
+            preparedStatement.setInt(2, idStudent);
+            preparedStatement.executeUpdate();
+        }catch (SQLException ex){
+            System.out.println(ex);
+        }
+    }     
+    
+    public float harfliNotDonustur(String harf){
+        if (harf !=null){
+            if(harf.equals("AA")){    return 4;}
+            else if(harf.equals("BA")){     return (float) 3.5;}
+            else if(harf.equals("BB")){  return 3;}
+            else if(harf.equals("CB")){  return (float) 2.5;}
+            else if(harf.equals("CC")){  return 2;}
+            else if(harf.equals("CD")){  return (float) 1.5;}
+            else if(harf.equals("DD")){  return 1;}
+            else if(harf.equals("FF")){  return 0;}
+            else if(harf.equals("FD")){  return -1;}
+            else {  return -2;}}
+        else{ 
+            return -2;}
+    }
    
 }

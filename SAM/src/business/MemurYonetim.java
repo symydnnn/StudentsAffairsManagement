@@ -16,11 +16,21 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.List;
+
+
 public class MemurYonetim extends Yonetim implements IMemur{
     Database db = new Database();
     private Connection con;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
+    OgrenciYonetim ogrenciYonetim= new OgrenciYonetim();
     
     public MemurYonetim() {}
     
@@ -141,7 +151,7 @@ public class MemurYonetim extends Yonetim implements IMemur{
             Logger.getLogger(MemurYonetim.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     
     @Override
     public boolean girisYap(String tcNo, String password) {
@@ -246,64 +256,108 @@ public class MemurYonetim extends Yonetim implements IMemur{
     
 
     @Override
-    public void transkriptYazdir(Ogrenci ogrenci) {
-        if(con==null){
-            System.out.println("Belge hazirlaniyor..");
-            con = db.BaglantiKontrol();
-        }
-        String sql= "SELECT * FROM schoolm.section as s, schoolm.lectures as l where l.idLectures = s.idLectures and s.idStudent = "+ogrenci.getIdNo()+";";
-        
+    public void transkriptYazdir(Ogrenci ogrenci,int idRequest) {  //SADECE ID
+        OgrenciYonetim oy= new OgrenciYonetim();
+        ArrayList<Ders> tkList = new ArrayList<Ders>();
+        tkList = transkpritHazirla(ogrenci.getIdNo());
+        ArrayList<Ogrenci> oList = new ArrayList<Ogrenci>();
+        oList = ogrenciYonetim.listele(ogrenci.getIdNo());
+        String link = link = "C:\\Users\\seyma\\OneDrive\\Belgeler\\NetBeansProjects\\SAM\\Belgeler\\"+ogrenci.getIdNo()+"-Transkript.pdf";
+        Document document = new Document();
+        int i=0;
+        String basariNotu = null;
         try {
-            Statement stmt=con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
-                int idSection = rs.getInt("idSection");
-                int idStudent = rs.getInt("idStudent");
-                int idLectures = rs.getInt("idLectures");
-                String lectureName = rs.getString("lectureName");
-                int midterm = rs.getInt("midterm");
-                int finali = rs.getInt("final");
-                float mean = rs.getFloat("mean");
-                String grade = rs.getString("grade");
-                System.out.println("Ogrenci id: "+idStudent+" Lecture:"+idLectures+" Lecture Name: "+lectureName+" midterm: "+midterm+" final: "+finali+" mean: "+mean+" grade: "+grade);
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(link));
+            
+            document.open();
+            document.add(new Paragraph("------------------------------------TRANSKRIPT------------------------------------"));
+            document.add(new Paragraph("Ogrenci Okul Numarası: "+oList.get(0).getIdNo()));
+            document.add(new Paragraph("Ogrenci Adı Soyadı: "+oList.get(0).getNameSurname()));
+            document.add(new Paragraph("Ogrenci TC Kimlik: "+oList.get(0).getTcNo()));
+            document.add(new Paragraph(" "));
+            if (tkList != null){
+                for (Ders ders : tkList){
+                document.add(new Paragraph("Ders Kodu:"+tkList.get(i).getIdNo()+" Ders Adı: "+tkList.get(i).getLectureName()));
+                basariNotu = tkList.get(i).getGrade();
+                if(tkList.get(i).getGrade() == null)
+                    basariNotu = " ";
+                document.add(new Paragraph("Yariyil Notu: "+tkList.get(i).getMidterm()+" Final: "+tkList.get(i).getFinali()+" Ortalama: "+tkList.get(i).getMean()+" Basari Notu: "+basariNotu));
+                i++;
+                }
             }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(MemurYonetim.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+            document.add(new Paragraph("GANO: "+oList.get(0).getGANO()));
+            document.close();
+            writer.close();
+            belgeLink(link,idRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+        }  
+    }
+    
+    @Override
+    public void ganoHesapla(int idStudent) {
+        super.ganoHesapla(idStudent); 
+    }
+
+    @Override
+    public ArrayList<Ders> transkpritHazirla(int idStudent) {
+        return super.transkpritHazirla(idStudent); 
     }
     
 
     @Override
-    public void ogrenciBelgesiYazdir(Ogrenci ogrenci) {
+    public void ogrenciBelgesiYazdir(Ogrenci ogrenci,int idRequest) {
+        
+        String link = link = "C:\\Users\\seyma\\OneDrive\\Belgeler\\NetBeansProjects\\SAM\\Belgeler\\"+ogrenci.getIdNo()+"-OgrenciBelgesi.pdf";
+        
         if(con==null){
             System.out.println("Belge hazirlaniyor..");
             con = db.BaglantiKontrol();
         }
+        Document document = new Document();
         String sql= "SELECT s.idStudent,s.nameSurname,s.tcNo,s.idFaculty,f.FacultyName,f.Department,s.class,s.semester,s.GANO"
                 + " FROM schoolm.student as s, schoolm.faculty as f where f.idFaculty = s.idFaculty and s.idStudent = "+ogrenci.getIdNo()+";";
         
         try {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(link));
+            document.open();
+            document.add(new Paragraph("-------------------------------------OGRENCI BELGESI-------------------------------------"));
+            document.add(new Paragraph(" "));
+            
+            
             Statement stmt=con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 int idStudent = rs.getInt("idStudent");
                 int idFaculty = rs.getInt("idFaculty");
-                int tcNo = rs.getInt("tcNo");
+                String tcNo = rs.getString("tcNo");
                 String nameSurname = rs.getString("nameSurname");
                 String facultyName = rs.getString("FacultyName");
                 String department = rs.getString("Department");
                 int sinif = rs.getInt("class");
                 int semester = rs.getInt("semester");
                 float GANO = rs.getFloat("GANO");
-                System.out.println("Ogrenci no: "+idStudent+"\nOgrenci: "+nameSurname+"\nTC Kimlik: "+tcNo
-                +"\nFakülte bilgisi\nFakülte id: "+idFaculty+" Fakülte İsmi: "+facultyName+" Departman: "+department
-                +"\nSınıfı: "+sinif+"\nDönem: "+semester+"\nGANO:"+GANO);
+                
+                document.add(new Paragraph("Ogrenci Okul Numarası: "+idStudent));
+                document.add(new Paragraph("Ogrenci Adı Soyadı: "+nameSurname));
+                document.add(new Paragraph("Ogrenci TC Kimlik: "+tcNo));
+                
+                document.add(new Paragraph(" "));
+                document.add(new Paragraph("Sınıf: "+sinif));
+                document.add(new Paragraph("Donem: "+semester));
+                document.add(new Paragraph("GANO: "+GANO));
+                document.add(new Paragraph(" "));
+                document.add(new Paragraph("Fakulte Bilgisi"));
+                document.add(new Paragraph("Fakulte: "+facultyName));
+                document.add(new Paragraph("Bolum: "+department));
+                document.close();
+                writer.close();
             }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(MemurYonetim.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            belgeLink(link,idRequest);
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }  
     }
 
     @Override
@@ -331,13 +385,20 @@ public class MemurYonetim extends Yonetim implements IMemur{
     }
     
     @Override
-    public void StajZorunlulugu(int idStudent){
+    public void StajZorunlulugu(int idStudent,int idRequest){
+        String link = link = "C:\\Users\\seyma\\OneDrive\\Belgeler\\NetBeansProjects\\SAM\\Belgeler\\"+idStudent+"-StajZorunluluk.pdf";
+        Document document = new Document();
         if(con==null){
             System.out.println("Belge hazirlaniyor..");
             con = db.BaglantiKontrol();
         }
         String sql = "Select s.idStudent, f.idFaculty, f.FacultyName, f.Department from schoolm.student as s, schoolm.faculty as f where s.idFaculty = f.idFaculty and s.idStudent ="+idStudent+";";
         try {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(link));
+            document.open();
+            document.add(new Paragraph("--------------------------------STAJ ZORUNLULUK BELGESI--------------------------------"));
+            document.add(new Paragraph(" "));
+            
             Statement stmt=con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             
@@ -346,48 +407,67 @@ public class MemurYonetim extends Yonetim implements IMemur{
                 int idFaculty = rs.getInt("idFaculty");
                 String facultyName = rs.getString("FacultyName");
                 String department = rs.getString("Department");
-                System.out.println("Ogrenci no: "+idStudent
-                        +"\nFakülte bilgisi\nFakülte id: "+idFaculty+" Fakülte İsmi: "+facultyName+" Departman: "+department);
+                
+                document.add(new Paragraph("Ogrenci Okul Numarası: "+idStudent));
+                document.add(new Paragraph(" "));
+                document.add(new Paragraph("Fakulte Kodu: "+idFaculty));
+                document.add(new Paragraph("Fakulte: "+facultyName));
+                document.add(new Paragraph("Bolum: "+department));
+                document.add(new Paragraph(" "));
                 
                 if(idFaculty == 201){
-                    System.out.println("20 ve 40 iş günü staj zorunlu degildir.");
+                    document.add(new Paragraph("20 ve 40 is gunu staj zorunlulugu bulunmaktadir."));
                 } 
                 else if (idFaculty == 200){
-                    System.out.println("36 ve 36, toplam 72 iş günü staj zorunlu degildir.");
+                    document.add(new Paragraph("36 ve 36, toplam 72 is gunu staj zorunlulugu bulunmaktadir."));
                 }
                 else{
-                    System.out.println("Staj zorunlulugu bulunmamaktadir");
+                    document.add(new Paragraph("Saj zorunlulugu bulunmamaktadır."));
                 }
-                
+                document.close();
+                writer.close();
+                belgeLink(link,idRequest);
             }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(MemurYonetim.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (Exception e){
+            e.printStackTrace();
         }    
         
     }
     
     @Override
-    public void DisiplinSucuSorgula(int idStudent){
+    public void DisiplinSucuSorgula(int idStudent, int idRequest){
+        String link = "C:\\Users\\seyma\\OneDrive\\Belgeler\\NetBeansProjects\\SAM\\Belgeler\\"+idStudent+"-DisiplinBelgesi.pdf";
+        Document document = new Document();
+        
         if(con==null){
             System.out.println("Belge hazirlaniyor..");
             con = db.BaglantiKontrol();
         }
         String sql = "Select * from schoolm.discipline where idStudent ="+idStudent+";";
         try {
+            
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(link));
+            document.open();
+            document.add(new Paragraph("--------------------------------DISIPLIN BELGESI--------------------------------"));
+            document.add(new Paragraph(" "));
+            
+            
             Statement stmt=con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             
             while (rs.next()){
                 idStudent = rs.getInt("idStudent");
                 String discipline = rs.getString("discipline");
-                
-                System.out.println(idStudent + " No'lu ogrencinin disiplin sucu: "+discipline);
-                
+                document.add(new Paragraph(idStudent+ " No'lu ogrencinin disiplin sucu: "));
+                document.add(new Paragraph(discipline));
             }
-        }
-        catch (SQLException ex) {
-            System.out.println(ex);
+        document.close();
+        writer.close();
+        
+        belgeLink(link,idRequest);
+        
+        }catch (Exception e){
+            e.printStackTrace();
         }    
     }
     @Override
@@ -431,6 +511,23 @@ public class MemurYonetim extends Yonetim implements IMemur{
         }
     }
     
+    public void belgeLink(String link,int idRequest){
+        if(con==null){
+            con = db.BaglantiKontrol();
+        }
+        String sorgu =  "Update schoolm.request set link = ? where idRequest = ?";
+      
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            preparedStatement.setString(1, link);
+            preparedStatement.setInt(2, idRequest);
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Beklenmeyen bir hata olustu.");
+        }
+    }
+    
     public void belgeRed(int idRequest){
         if(con==null){
             con = db.BaglantiKontrol();
@@ -464,10 +561,8 @@ public class MemurYonetim extends Yonetim implements IMemur{
             System.out.println("Beklenmeyen bir hata olustu.");
         }
     }
-    
-    
-    
 
+    
 }
       
 

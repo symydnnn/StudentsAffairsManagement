@@ -269,4 +269,16 @@ public class Ders extends Birimler{
         this.mean = mean;
     }
     
+    
+    /// Transkript hazırlama
+    public Ders(String studentNameSurname,String lectureName, int credit, int midterm, int finali, float mean, String grade, int idNo) {
+        super(idNo);
+        this.lectureName = lectureName;
+        this.credit = credit;
+        this.midterm = midterm;
+        this.finali = finali;
+        this.mean = mean;
+        this.grade = grade;
+        this.studentNameSurname = studentNameSurname;
+    }
 }

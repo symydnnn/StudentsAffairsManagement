@@ -15,9 +15,9 @@ public interface IMemur <T>{
     void duyuruYayinla(Duyuru duyuru);
     void duyuruSil(int idActivity);
     void duyuruGuncelle(Duyuru duyuru); 
-    void ogrenciBelgesiYazdir(Ogrenci ogrenci);
-    void transkriptYazdir(Ogrenci ogrenci);
+    void ogrenciBelgesiYazdir(Ogrenci ogrenci,int idRequest);
+    void transkriptYazdir(Ogrenci ogrenci,int idRequest);
     void dersEkle(Ders ders);
-    void StajZorunlulugu(int idStudent);
-    void DisiplinSucuSorgula(int idStudent);
+    void StajZorunlulugu(int idStudent,int idRequest);
+    void DisiplinSucuSorgula(int idStudent,int idRequest);
 }
