@@ -31,6 +31,7 @@ public class FMemur extends javax.swing.JFrame {
         profil(idNo);
         idActivityField.setText(String.valueOf(yonetim.idAtama()));
         duyurular();
+        belgeTalepler();
     }
     
     public void profil(int idNo){
@@ -55,6 +56,35 @@ public class FMemur extends javax.swing.JFrame {
                 String content = duyuruList.get(i).getContent();
                 String activityDate = duyuruList.get(i).getActivityDate();
                 Object [] data = {idNo, activityName,content,activityDate};
+                model.addRow(data);
+                i++;
+            }
+        }
+    }
+    
+    public void belgeTalepler(){
+        ArrayList<Ogrenci> belgeList = yonetim.belgeIstekleriGoruntule();
+        int i=0;
+        model = (DefaultTableModel) belgeTalepTable.getModel();
+        
+        if(belgeList != null){
+            for (Ogrenci o : belgeList){
+                int idRequest = belgeList.get(i).getIdRequest();
+                int idStudent = belgeList.get(i).getIdNo();
+                String documentType = belgeList.get(i).getDocumentType();
+                String instutation = belgeList.get(i).getInstutation();
+                String content = belgeList.get(i).getContent();
+                int approve = belgeList.get(i).getApprove();
+                String durum;
+                if (approve==-1)
+                    durum = " ";
+                else if(approve == 0)
+                    durum = "Red";
+                else
+                    durum = "Onaylı";
+                String link = belgeList.get(i).getLink();
+                String date = belgeList.get(i).getDate();
+                Object [] data = {idRequest, idStudent,documentType,instutation,content,durum,link,date};
                 model.addRow(data);
                 i++;
             }
@@ -121,6 +151,11 @@ public class FMemur extends javax.swing.JFrame {
         mesajDuyuru = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        belgeTalepTable = new javax.swing.JTable();
+        approveButton = new javax.swing.JButton();
+        retButton = new javax.swing.JButton();
+        onayMesaj = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -276,11 +311,12 @@ public class FMemur extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameSurnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel3)
-                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(nameSurnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -699,15 +735,76 @@ public class FMemur extends javax.swing.JFrame {
 
         jPanel10.setBackground(java.awt.SystemColor.activeCaption);
 
+        belgeTalepTable.setFont(new java.awt.Font("Arial Narrow", 0, 12)); // NOI18N
+        belgeTalepTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Başvuru No", "Ogrenci No", "Dokuman", "Kurum", "Açıklama", "Onay Durumu", "Link", "Başvuru Tarihi"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(belgeTalepTable);
+
+        approveButton.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        approveButton.setText("BELGE OLUŞTUR");
+        approveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approveButtonActionPerformed(evt);
+            }
+        });
+
+        retButton.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        retButton.setText("TALEP RED");
+        retButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retButtonActionPerformed(evt);
+            }
+        });
+
+        onayMesaj.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addComponent(jScrollPane6)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(onayMesaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(retButton, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(approveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(approveButton)
+                    .addComponent(retButton))
+                .addGap(18, 18, 18)
+                .addComponent(onayMesaj, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Onay İslemleri", jPanel10);
@@ -871,9 +968,10 @@ public class FMemur extends javax.swing.JFrame {
 
     private void duyuruSilButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duyuruSilButtonActionPerformed
         mesajDuyuru.setText(" ");
+        int yanit = JOptionPane.showConfirmDialog(this, "Duyuruyu silmek istiyor musunu?","Onay",JOptionPane.YES_NO_OPTION);
         int row = duyurularTable.getSelectedRow();
         int idNo = Integer.parseInt(duyurularTable.getModel().getValueAt(row, 0).toString());
-        int yanit = JOptionPane.showConfirmDialog(this, "Duyuruyu silmek istiyor musunu?","Onay",JOptionPane.YES_NO_OPTION);
+        
         if (yanit ==JOptionPane.YES_OPTION){
             memur.duyuruSil(idNo);
             mesajDuyuru.setForeground(Color.red);
@@ -886,6 +984,62 @@ public class FMemur extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_duyuruSilButtonActionPerformed
+
+    private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButtonActionPerformed
+        onayMesaj.setText(" ");
+        int yanit = JOptionPane.showConfirmDialog(this, "Belge talebini onaylıyor musunuz?","Onay",JOptionPane.YES_NO_OPTION);
+        int row = belgeTalepTable.getSelectedRow();
+        int idRequest = Integer.parseInt(belgeTalepTable.getModel().getValueAt(row, 0).toString());
+        int idStudent = Integer.parseInt(belgeTalepTable.getModel().getValueAt(row, 1).toString());
+        String belgeTip = belgeTalepTable.getModel().getValueAt(row, 2).toString();
+        String link =   belgeTalepTable.getModel().getValueAt(row, 6).toString();  ///belge oluşturup linklerini ata
+        if (yanit ==JOptionPane.YES_OPTION){
+            memur.belgeOnay(idRequest);
+            if(belgeTip == "Transkript"){
+                memur.transkriptYazdir(new Ogrenci(idStudent));
+                
+            }
+            else if(belgeTip == "Disiplin Belgesi"){
+                memur.StajZorunlulugu(idStudent);
+            }
+            else if(belgeTip == "Ogrenci Belgesi"){
+                memur.ogrenciBelgesiYazdir(new Ogrenci(idStudent));
+            }
+            else if(belgeTip == "Staj Zorunluluk Belgesi"){
+                memur.StajZorunlulugu(idStudent);
+            }
+            
+            
+            
+            
+            
+            onayMesaj.setForeground(Color.green);
+            onayMesaj.setText("Belge onaylandı. Belge oluşturuldu.");
+            int rows = model.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--){
+                model.removeRow(i); 
+            }
+            belgeTalepler();
+        }
+    }//GEN-LAST:event_approveButtonActionPerformed
+
+    private void retButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retButtonActionPerformed
+        onayMesaj.setText(" ");
+        int yanit = JOptionPane.showConfirmDialog(this, "Belge talebini reddedeceksiniz. Onaylıyor musunuz?","Onay",JOptionPane.YES_NO_OPTION);
+        int row = belgeTalepTable.getSelectedRow();
+        int idRequest = Integer.parseInt(belgeTalepTable.getModel().getValueAt(row, 0).toString());
+        
+        if (yanit ==JOptionPane.YES_OPTION){
+            memur.belgeRed(idRequest);
+            onayMesaj.setForeground(Color.red);
+            onayMesaj.setText("Belge talebi reddedildi.");
+            int rows = model.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--){
+                model.removeRow(i); 
+            }
+            belgeTalepler();
+        }
+    }//GEN-LAST:event_retButtonActionPerformed
 
     
     public static void main(String args[]) {
@@ -900,6 +1054,8 @@ public class FMemur extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar activityDateCalendar;
     private javax.swing.JTextField activityNameField;
+    private javax.swing.JButton approveButton;
+    private javax.swing.JTable belgeTalepTable;
     private javax.swing.JTextArea contentArea;
     private javax.swing.JButton duyuruGuncelleButton;
     private javax.swing.JButton duyuruSilButton;
@@ -937,6 +1093,7 @@ public class FMemur extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
@@ -947,7 +1104,9 @@ public class FMemur extends javax.swing.JFrame {
     private javax.swing.JTextField nameSurnameField;
     private javax.swing.JButton officerListButton;
     private javax.swing.JTable officersTable;
+    private javax.swing.JLabel onayMesaj;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton retButton;
     private javax.swing.JButton studentsListButton;
     private javax.swing.JTable studentsTable;
     private javax.swing.JTextField tcNoField;

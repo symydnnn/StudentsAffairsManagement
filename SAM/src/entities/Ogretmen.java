@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package entities;
 
-/**
- *
- * @author seyma
- */
+
 public class Ogretmen extends Birimler {
     private int idFaculty;
     private String Department;

@@ -5,6 +5,7 @@ import Database.Database;
 import entities.Birimler;
 import entities.Ders;
 import entities.Duyuru;
+import entities.Ogrenci;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,6 +107,33 @@ public class Yonetim extends Birimler{
                 dersList.add(new Ders(idNo, lectureName, date, ACTS, credit, semester, nameSurname,department));
             }
             return dersList;
+        }catch (SQLException ex){
+            System.out.println(ex);
+                return null;
+        }
+    }
+    
+    public ArrayList<Ogrenci> belgeIstekleriGoruntule(){
+        ArrayList<Ogrenci> belgeList = new ArrayList<Ogrenci>();
+        if(con==null){
+            con = db.BaglantiKontrol();
+        }
+        try{
+            Statement stmt=con.createStatement();
+            String sql="SELECT * FROM schoolm.request";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                int idNo = rs.getInt("idStudent");
+                int idRequest = rs.getInt("idRequest");
+                String documentType = rs.getString("documentType");
+                String instutation = rs.getString("instutation");
+                String content = rs.getString("content");
+                int approve = rs.getInt("approve");
+                String link = rs.getString("link");
+                String date = rs.getString("date");
+                belgeList.add(new Ogrenci(idRequest,idNo,documentType,instutation,content,approve,link,date));
+            }
+            return belgeList;
         }catch (SQLException ex){
             System.out.println(ex);
                 return null;

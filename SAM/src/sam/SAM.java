@@ -63,7 +63,7 @@ public class SAM {
         //System.out.println(ogrenci.kayitDurumuSogrula(601));
         //System.out.println(ogrenci.belgeTalepleriGoruntule(601).get(0).getDocumentType());
         //System.out.println(ogretmen.dersinOrtalamasi(300).get(0).getMean());
-        System.out.println(ogretmen.ogrenciGetir(601, 300).get(0).getStudentNameSurname());
+        //System.out.println(ogretmen.ogrenciGetir(601, 300).get(0).getStudentNameSurname());
     }
     
 }

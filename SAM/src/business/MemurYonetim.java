@@ -414,24 +414,60 @@ public class MemurYonetim extends Yonetim implements IMemur{
     }
     
     
-    public void belgeOnay(Ogrenci ogrenci){
+    public void belgeOnay(int idRequest){
         if(con==null){
             con = db.BaglantiKontrol();
         }
-        String sorgu =  "Update schoolm.request set approve = ? where idStudent = ? and idRequest = ?";
+        String sorgu =  "Update schoolm.request set approve = ? where idRequest = ?";
       
         try {
             preparedStatement = con.prepareStatement(sorgu);
-            preparedStatement.setBoolean(1, true);
-            preparedStatement.setInt(2, ogrenci.getIdNo());
-            preparedStatement.setInt(2, ogrenci.getIdRequest());
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, idRequest);
             preparedStatement.executeUpdate();
             
         } catch (SQLException ex) {
             System.out.println("Beklenmeyen bir hata olustu.");
         }
     }
-}
+    
+    public void belgeRed(int idRequest){
+        if(con==null){
+            con = db.BaglantiKontrol();
+        }
+        String sorgu =  "Update schoolm.request set approve = ? where idRequest = ?";
+      
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setInt(2, idRequest);
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Beklenmeyen bir hata olustu.");
+        }
+    }
+    
+    public void linkEkle(int idRequest, String link){
+        if(con==null){
+            con = db.BaglantiKontrol();
+        }
+        String sorgu =  "Update schoolm.request set link = ? where idRequest = ?";
+      
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            preparedStatement.setString(1, link);
+            preparedStatement.setInt(2, idRequest);
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Beklenmeyen bir hata olustu.");
+        }
+    }
+    
+    
+    
 
+}
       
 
