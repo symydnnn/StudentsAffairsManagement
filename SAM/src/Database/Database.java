@@ -22,6 +22,7 @@ public class Database {
                 con=DriverManager.getConnection(url,user,pass);
             } catch (SQLException ex) {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         } catch (ClassNotFoundException ex) {
             System.out.println("Baglantida sorun var");
