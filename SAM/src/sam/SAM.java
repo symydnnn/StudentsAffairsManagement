@@ -66,7 +66,8 @@ public class SAM {
         //System.out.println(ogretmen.ogrenciGetir(601, 300).get(0).getStudentNameSurname());
         //memur.transkriptYazdir(o4);
         //memur.ogrenciBelgesiYazdir(o4);
-        memur.DisiplinSucuSorgula(601,900);
+        //memur.DisiplinSucuSorgula(601,900);
+        //memur.ganoHesapla(607);
     }
     
 }

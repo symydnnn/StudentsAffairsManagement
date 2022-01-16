@@ -1098,6 +1098,7 @@ public class FMemur extends javax.swing.JFrame {
             memur.belgeOnay(idRequest);
             if(belgeTip.equals("Transkript")){
                 System.out.println("Transkript Oluşturuluyor");
+                memur.ganoHesapla(idStudent);
                 memur.transkriptYazdir(new Ogrenci(idStudent),idRequest);
             }
             else if(belgeTip.equals("Disiplin Belgesi")){

@@ -233,7 +233,7 @@ public class Yonetim extends Birimler{
                 notu = harfliNotDonustur(harfliNot);
                 if (notu != -2){
                 credit = notlar.get(i).getCredit();
-                puan =puan + (notu*credit);
+                puan = puan + (notu*credit);
                 toplamKredi += credit;
                 System.out.println("Harf: "+harfliNot + " notu: "+ notu + " kredi : "+ credit + " puan: "+ puan);
                 i++;}

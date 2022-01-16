@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FOgretmen extends javax.swing.JFrame {
     Yonetim yonetim = new Yonetim();
-    DefaultTableModel model;
+    DefaultTableModel model,model2;
     OgretmenYonetim ogretmen = new OgretmenYonetim();
     
     public FOgretmen(int idNo) {
@@ -39,7 +39,35 @@ public class FOgretmen extends javax.swing.JFrame {
         passwordField.setText(String.valueOf(ot.get(0).getPassword()));
         facultyIdField.setText(String.valueOf(ot.get(0).getIdFaculty()));
     }
-
+    
+    public void sinifListesi(){
+        int idLectures = Integer.parseInt(idLecturesField.getText());
+        ArrayList<Ders> sinifList = ogretmen.dersiAlanOgrenciler(idLectures);
+        int i=0;
+        model2 = (DefaultTableModel) studentsListTable.getModel();
+        
+        if(sinifList != null){
+            for (Ders ders : sinifList){
+                String lectureName = sinifList.get(i).getLectureName();
+                int idStudent = sinifList.get(i).getIdStudent();
+                String nameSurname = sinifList.get(i).getStudentNameSurname();
+                int vize = sinifList.get(i).getMidterm();
+                int finali = sinifList.get(i).getFinali();
+                float mean = sinifList.get(i).getMean();
+                String grade = sinifList.get(i).getGrade();
+                Object [] data = {lectureName, idStudent,nameSurname,vize,finali,mean,grade};
+                model2.addRow(data);
+                i++;
+            }
+        }
+            
+        ArrayList<Ders> ortalamalar = ogretmen.dersinOrtalamasi(idLectures);
+        studentsField.setText(String.valueOf(i));
+        vizeMeanField.setText(String.valueOf(ortalamalar.get(0).getMidterm()));
+        finalMeanField.setText(String.valueOf(ortalamalar.get(0).getFinali()));
+        meanMeanField.setText(String.valueOf(ortalamalar.get(0).getMean()));
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -811,34 +839,15 @@ public class FOgretmen extends javax.swing.JFrame {
         int idTeacher = Integer.parseInt(idTeacherField.getText());
         Ders ders = new Ders(idLectures,lectureName,date,ACTS,credit,semester);
         ogretmen.dersOlustur(ders, idTeacher,idFaculty);
-        
     }//GEN-LAST:event_dersKayitButtonActionPerformed
 
     private void listOfStudentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfStudentsButtonActionPerformed
-        int idLectures = Integer.parseInt(idLecturesField.getText());
-        ArrayList<Ders> sinifList = ogretmen.dersiAlanOgrenciler(idLectures);
-        int i=0;
-        model = (DefaultTableModel) studentsListTable.getModel();
-        
-        if(sinifList != null){
-            for (Ders ders : sinifList){
-                String lectureName = sinifList.get(i).getLectureName();
-                int idStudent = sinifList.get(i).getIdStudent();
-                String nameSurname = sinifList.get(i).getStudentNameSurname();
-                int vize = sinifList.get(i).getMidterm();
-                int finali = sinifList.get(i).getFinali();
-                float mean = sinifList.get(i).getMean();
-                String grade = sinifList.get(i).getGrade();
-                Object [] data = {lectureName, idStudent,nameSurname,vize,finali,mean,grade};
-                model.addRow(data);
-                i++;
-            }
-        }
-        ArrayList<Ders> ortalamalar = ogretmen.dersinOrtalamasi(idLectures);
-        studentsField.setText(String.valueOf(i));
-        vizeMeanField.setText(String.valueOf(ortalamalar.get(0).getMidterm()));
-        finalMeanField.setText(String.valueOf(ortalamalar.get(0).getFinali()));
-        meanMeanField.setText(String.valueOf(ortalamalar.get(0).getMean()));
+        model2 = (DefaultTableModel) studentsListTable.getModel();
+        int rows = model2.getRowCount(); 
+                for(int i = rows - 1; i >=0; i--){
+                    model2.removeRow(i); 
+                }
+        sinifListesi();
     }//GEN-LAST:event_listOfStudentsButtonActionPerformed
 
     private void ogrenciGetirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ogrenciGetirButtonActionPerformed
@@ -858,6 +867,10 @@ public class FOgretmen extends javax.swing.JFrame {
                 float mean = ogrenciDersi.get(0).getMean();
                 String grade = ogrenciDersi.get(0).getGrade();
                 Object [] data = {lectureName, nameSurname,vize,finali,mean,grade};
+                int rows = model.getRowCount(); 
+                for(int i = rows - 1; i >=0; i--){
+                    model.removeRow(i); 
+                }
                 model.addRow(data);
             }
         }
