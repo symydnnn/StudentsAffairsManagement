@@ -52,10 +52,10 @@ public class FOgretmen extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        danismanlikButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        DuyurulariGetirButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         idTeacherField = new javax.swing.JLabel();
+        CikisYapButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -147,15 +147,15 @@ public class FOgretmen extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("ÖGRETMEN İSLEMLERİ");
 
-        danismanlikButton.setBackground(java.awt.SystemColor.activeCaptionBorder);
-        danismanlikButton.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
-        danismanlikButton.setForeground(new java.awt.Color(203, 110, 31));
-        danismanlikButton.setText("DANISMAN MAIL");
-
-        jButton2.setBackground(java.awt.SystemColor.activeCaptionBorder);
-        jButton2.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(203, 110, 31));
-        jButton2.setText("DUYURULAR");
+        DuyurulariGetirButton.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        DuyurulariGetirButton.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        DuyurulariGetirButton.setForeground(new java.awt.Color(203, 110, 31));
+        DuyurulariGetirButton.setText("DUYURULAR");
+        DuyurulariGetirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DuyurulariGetirButtonActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(java.awt.SystemColor.activeCaptionBorder);
         jButton3.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
@@ -167,37 +167,55 @@ public class FOgretmen extends javax.swing.JFrame {
             }
         });
 
+        CikisYapButton.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        CikisYapButton.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 14)); // NOI18N
+        CikisYapButton.setForeground(new java.awt.Color(203, 110, 31));
+        CikisYapButton.setText("ÇIKIŞ YAP");
+        CikisYapButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CikisYapButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(danismanlikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(idTeacherField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idTeacherField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CikisYapButton, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(DuyurulariGetirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(idTeacherField, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(danismanlikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(idTeacherField, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DuyurulariGetirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
+                .addComponent(CikisYapButton)
+                .addGap(19, 19, 19))
         );
 
         jTabbedPane1.addTab("Ana Sayfa", jPanel1);
@@ -875,6 +893,17 @@ public class FOgretmen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_notKayitButtonActionPerformed
 
+    private void DuyurulariGetirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuyurulariGetirButtonActionPerformed
+        FDuyurular fDuyurular = new FDuyurular();
+        fDuyurular.setVisible(true);
+    }//GEN-LAST:event_DuyurulariGetirButtonActionPerformed
+
+    private void CikisYapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CikisYapButtonActionPerformed
+        FGiris fGiris = new FGiris();
+        this.setVisible(false);
+        fGiris.setVisible(true);
+    }//GEN-LAST:event_CikisYapButtonActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -886,9 +915,10 @@ public class FOgretmen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner ACTSSpinner;
+    private javax.swing.JButton CikisYapButton;
+    private javax.swing.JButton DuyurulariGetirButton;
     private javax.swing.JLabel Fakulte;
     private javax.swing.JSpinner creditSpinner;
-    private javax.swing.JButton danismanlikButton;
     private com.toedter.calendar.JCalendar dateCalendar;
     private javax.swing.JComboBox<String> departmentCB;
     private javax.swing.JTextField departmentField;
@@ -904,7 +934,6 @@ public class FOgretmen extends javax.swing.JFrame {
     private javax.swing.JTextField idLecturesField;
     private javax.swing.JTextField idStudenttField;
     private javax.swing.JLabel idTeacherField;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private com.toedter.calendar.JCalendar jCalendar1;
     private com.toedter.calendar.JDateChooser jDateChooser1;

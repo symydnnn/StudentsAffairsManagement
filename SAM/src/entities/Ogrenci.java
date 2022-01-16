@@ -17,6 +17,7 @@ public class Ogrenci extends Birimler{
     private String link;
     private String date;
     private int idRequest;
+    private String discipline;
     
     public String getDate() {
         return date;
@@ -116,6 +117,15 @@ public class Ogrenci extends Birimler{
         this.idRequest = idRequest;
     }
 
+    public String getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(String discipline) {
+        this.discipline = discipline;
+    }
+
+    
     
     public Ogrenci(int idNo, String nameSurname, String tcNo, int idFaculty, int sınıf, int semester, float GANO, String password) {
         super(nameSurname, idNo, tcNo, password);
@@ -144,6 +154,12 @@ public class Ogrenci extends Birimler{
         this.approve = approve;
         this.link = link;
         this.date = date;
+    }
+    
+    //Disiplin Sucu Giris
+    public Ogrenci(int idNo,String discipline) {
+        super(idNo);
+        this.discipline = discipline;
     }
     
     

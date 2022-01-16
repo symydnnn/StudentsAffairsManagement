@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FMemur extends javax.swing.JFrame {
     Yonetim yonetim = new Yonetim();
-    DefaultTableModel model;
+    DefaultTableModel model, model2, model3;
     MemurYonetim memur = new MemurYonetim();
     OgrenciYonetim ogrenci = new OgrenciYonetim();
     OgretmenYonetim ogretmen = new OgretmenYonetim();
@@ -65,7 +65,7 @@ public class FMemur extends javax.swing.JFrame {
     public void belgeTalepler(){
         ArrayList<Ogrenci> belgeList = yonetim.belgeIstekleriGoruntule();
         int i=0;
-        model = (DefaultTableModel) belgeTalepTable.getModel();
+        model2 = (DefaultTableModel) belgeTalepTable.getModel();
         
         if(belgeList != null){
             for (Ogrenci o : belgeList){
@@ -87,7 +87,7 @@ public class FMemur extends javax.swing.JFrame {
                     link = "link";
                 String date = belgeList.get(i).getDate();
                 Object [] data = {idRequest, idStudent,documentType,instutation,content,durum,link,date};
-                model.addRow(data);
+                model2.addRow(data);
                 i++;
             }
         }
@@ -103,6 +103,7 @@ public class FMemur extends javax.swing.JFrame {
         duyurularButton = new javax.swing.JButton();
         teknikDestekButton = new javax.swing.JButton();
         idOfficerField = new javax.swing.JLabel();
+        CikisYapButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         kayitSilButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -158,6 +159,14 @@ public class FMemur extends javax.swing.JFrame {
         approveButton = new javax.swing.JButton();
         retButton = new javax.swing.JButton();
         onayMesaj = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        disiplinKayitOlusturbtn = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        disiplinlikOgrenciAciklamaArea = new javax.swing.JTextArea();
+        disiplinlikOgrenciIdField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        disiplinmesaj = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -175,6 +184,11 @@ public class FMemur extends javax.swing.JFrame {
         duyurularButton.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         duyurularButton.setForeground(new java.awt.Color(153, 0, 51));
         duyurularButton.setText("DUYURULAR");
+        duyurularButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                duyurularButtonActionPerformed(evt);
+            }
+        });
 
         teknikDestekButton.setBackground(java.awt.SystemColor.inactiveCaption);
         teknikDestekButton.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
@@ -183,6 +197,15 @@ public class FMemur extends javax.swing.JFrame {
         teknikDestekButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teknikDestekButtonActionPerformed(evt);
+            }
+        });
+
+        CikisYapButton.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 14)); // NOI18N
+        CikisYapButton.setForeground(new java.awt.Color(153, 0, 51));
+        CikisYapButton.setText("ÇIKIŞ YAP");
+        CikisYapButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CikisYapButtonActionPerformed(evt);
             }
         });
 
@@ -196,11 +219,14 @@ public class FMemur extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(idOfficerField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(duyurularButton, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(teknikDestekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(duyurularButton, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addComponent(teknikDestekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CikisYapButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
@@ -214,7 +240,9 @@ public class FMemur extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(teknikDestekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                     .addComponent(duyurularButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(CikisYapButton)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ana Sayfa", jPanel1);
@@ -533,7 +561,7 @@ public class FMemur extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Listele", jPanel2);
@@ -562,6 +590,8 @@ public class FMemur extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel7.setText("Açıklama");
+
+        activityDateCalendar.setDate(new java.util.Date(1642332414000L));
 
         jLabel10.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel10.setText("Başlangıç Tarih");
@@ -805,11 +835,75 @@ public class FMemur extends javax.swing.JFrame {
                     .addComponent(approveButton)
                     .addComponent(retButton))
                 .addGap(18, 18, 18)
-                .addComponent(onayMesaj, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addComponent(onayMesaj, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Onay İslemleri", jPanel10);
+
+        jPanel11.setBackground(java.awt.SystemColor.activeCaption);
+
+        disiplinKayitOlusturbtn.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        disiplinKayitOlusturbtn.setText("Disiplin Kaydı Olustur");
+        disiplinKayitOlusturbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disiplinKayitOlusturbtnActionPerformed(evt);
+            }
+        });
+
+        disiplinlikOgrenciAciklamaArea.setColumns(20);
+        disiplinlikOgrenciAciklamaArea.setRows(5);
+        jScrollPane7.setViewportView(disiplinlikOgrenciAciklamaArea);
+
+        jLabel11.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
+        jLabel11.setText("OGRENCİ ID");
+
+        jLabel13.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
+        jLabel13.setText("ISLENEN SUC AÇIKLAMA");
+
+        disiplinmesaj.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(disiplinmesaj, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel11Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel11))
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(disiplinKayitOlusturbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(disiplinlikOgrenciIdField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(109, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(disiplinlikOgrenciIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(disiplinmesaj, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(disiplinKayitOlusturbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
+        );
+
+        jTabbedPane1.addTab("Disiplin İslemleri", jPanel11);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -870,7 +964,7 @@ public class FMemur extends javax.swing.JFrame {
     private void studentsListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsListButtonActionPerformed
         ArrayList<Ogrenci> ogrenciList = ogrenci.listele();
         int i=0;
-        model = (DefaultTableModel) studentsTable.getModel();
+        model3 = (DefaultTableModel) studentsTable.getModel();
         
         if(ogrenciList != null){
             for (Ogrenci o : ogrenciList){
@@ -882,7 +976,7 @@ public class FMemur extends javax.swing.JFrame {
                 int idFaculty = ogrenciList.get(i).getIdFaculty();
                 float GANO = ogrenciList.get(i).getGANO();
                 Object [] data = {idNo, nameSurname,tcNo,sinifi,semester,idFaculty,GANO};
-                model.addRow(data);
+                model3.addRow(data);
                 i++;
             }
         }
@@ -892,7 +986,7 @@ public class FMemur extends javax.swing.JFrame {
     private void teacherListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherListButtonActionPerformed
         ArrayList<Ogretmen> ogretmenList = ogretmen.listele();
         int i=0;
-        model = (DefaultTableModel) teachersTable.getModel();
+        model3 = (DefaultTableModel) teachersTable.getModel();
         
         if(ogretmenList != null){
             for (Ogretmen ogrt : ogretmenList){
@@ -904,7 +998,7 @@ public class FMemur extends javax.swing.JFrame {
                 int idFaculty = ogretmenList.get(i).getIdFaculty();
                 
                 Object [] data = {idNo, nameSurname,tcNo,department,facultyName,idFaculty};
-                model.addRow(data);
+                model3.addRow(data);
                 i++;
             }
         }
@@ -913,7 +1007,7 @@ public class FMemur extends javax.swing.JFrame {
     private void officerListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_officerListButtonActionPerformed
         ArrayList<Memur> memurList = memur.listele();
         int i=0;
-        model = (DefaultTableModel) officersTable.getModel();
+        model3 = (DefaultTableModel) officersTable.getModel();
         
         if(memurList != null){
             for (Memur mem : memurList){
@@ -922,7 +1016,7 @@ public class FMemur extends javax.swing.JFrame {
                 String tcNo = memurList.get(i).getTcNo();
                 String employment = memurList.get(i).getEmployment();
                 Object [] data = {idNo, nameSurname,tcNo,employment};
-                model.addRow(data);
+                model3.addRow(data);
                 i++;
             }
         }
@@ -965,6 +1059,11 @@ public class FMemur extends javax.swing.JFrame {
         String date = duyurularTable.getModel().getValueAt(row, 3).toString();
         JOptionPane.showMessageDialog(rootPane,"Duyuru Guncellenmiştir.");
         memur.duyuruGuncelle(new Duyuru(idNo,activityName,content,date));
+        int rows = model.getRowCount(); 
+        for(int i = rows - 1; i >=0; i--){
+            model.removeRow(i);
+        }
+        duyurular();
         
     }//GEN-LAST:event_duyuruGuncelleButtonActionPerformed
 
@@ -1003,7 +1102,7 @@ public class FMemur extends javax.swing.JFrame {
             }
             else if(belgeTip.equals("Disiplin Belgesi")){
                 System.out.println("Disiplin belgesi Olusturuluyor");
-                memur.StajZorunlulugu(idStudent,idRequest);
+                memur.DisiplinSucuSorgula(idStudent,idRequest);
             }
             else if(belgeTip.equals("Ogrenci Belgesi")){
                 System.out.println("Ogrenci belgesi Olusturuluyor");
@@ -1015,9 +1114,9 @@ public class FMemur extends javax.swing.JFrame {
             }
             onayMesaj.setForeground(Color.green);
             onayMesaj.setText("Belge onaylandı. Belge oluşturuldu.");
-            int rows = model.getRowCount(); 
+            int rows = model2.getRowCount(); 
             for(int i = rows - 1; i >=0; i--){
-                model.removeRow(i); 
+                model2.removeRow(i); 
             }
             belgeTalepler();
         }
@@ -1035,11 +1134,38 @@ public class FMemur extends javax.swing.JFrame {
             onayMesaj.setText("Belge talebi reddedildi.");
             int rows = model.getRowCount(); 
             for(int i = rows - 1; i >=0; i--){
-                model.removeRow(i); 
+                model2.removeRow(i); 
             }
             belgeTalepler();
         }
     }//GEN-LAST:event_retButtonActionPerformed
+
+    private void disiplinKayitOlusturbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disiplinKayitOlusturbtnActionPerformed
+        disiplinmesaj.setText(" ");
+        int idStudent = Integer.parseInt(disiplinlikOgrenciIdField.getText());
+        String discipline = disiplinlikOgrenciAciklamaArea.getText();
+        int yanit = JOptionPane.showConfirmDialog(this, "Disiplin kaydı oluşturacaksınız. Onaylıyor musunuz?","Onay",JOptionPane.YES_NO_OPTION);
+        if (yanit ==JOptionPane.YES_OPTION){
+             memur.disiplinSucuEkle(new Ogrenci(idStudent,discipline));
+             onayMesaj.setForeground(Color.orange);
+             disiplinmesaj.setText("Ogrenci Disiplin Kaydı Olusturulmuştur.");
+        }
+        else{
+            onayMesaj.setForeground(Color.BLUE);
+            disiplinmesaj.setText("Kayıt Oluşturulamadı.");
+        }
+    }//GEN-LAST:event_disiplinKayitOlusturbtnActionPerformed
+
+    private void duyurularButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duyurularButtonActionPerformed
+        FDuyurular fDuyurular = new FDuyurular();
+        fDuyurular.setVisible(true);
+    }//GEN-LAST:event_duyurularButtonActionPerformed
+
+    private void CikisYapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CikisYapButtonActionPerformed
+        FGiris fGiris = new FGiris();
+        this.setVisible(false);
+        fGiris.setVisible(true);
+    }//GEN-LAST:event_CikisYapButtonActionPerformed
 
     
     public static void main(String args[]) {
@@ -1052,11 +1178,16 @@ public class FMemur extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CikisYapButton;
     private com.toedter.calendar.JCalendar activityDateCalendar;
     private javax.swing.JTextField activityNameField;
     private javax.swing.JButton approveButton;
     private javax.swing.JTable belgeTalepTable;
     private javax.swing.JTextArea contentArea;
+    private javax.swing.JButton disiplinKayitOlusturbtn;
+    private javax.swing.JTextArea disiplinlikOgrenciAciklamaArea;
+    private javax.swing.JTextField disiplinlikOgrenciIdField;
+    private javax.swing.JLabel disiplinmesaj;
     private javax.swing.JButton duyuruGuncelleButton;
     private javax.swing.JButton duyuruSilButton;
     private javax.swing.JButton duyuruYayinlaButton;
@@ -1069,7 +1200,9 @@ public class FMemur extends javax.swing.JFrame {
     private javax.swing.JLabel idOfficerField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1080,6 +1213,7 @@ public class FMemur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1094,6 +1228,7 @@ public class FMemur extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;

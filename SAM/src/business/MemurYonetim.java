@@ -254,6 +254,24 @@ public class MemurYonetim extends Yonetim implements IMemur{
         }
     }
     
+    
+    public void disiplinSucuEkle(Ogrenci ogrenci) {
+        if(con==null){
+            con = db.BaglantiKontrol();
+        }
+        String sorgu = "Insert Into schoolm.discipline (idStudent,discipline) VALUES(?,?);";
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            preparedStatement.setInt(1, ogrenci.getIdNo());
+            preparedStatement.setString(2, ogrenci.getDiscipline());
+            preparedStatement.executeUpdate();
+            System.out.println("Disiplin Kaydı uluşturuldu.");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MemurYonetim.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     @Override
     public void transkriptYazdir(Ogrenci ogrenci,int idRequest) {  //SADECE ID

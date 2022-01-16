@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FOgrenci extends javax.swing.JFrame {
     Yonetim yonetim = new Yonetim();
-    DefaultTableModel model;
+    DefaultTableModel model, model2;
     OgrenciYonetim ogrenci = new OgrenciYonetim();
     
     public FOgrenci(int idNo) {
@@ -25,7 +25,7 @@ public class FOgrenci extends javax.swing.JFrame {
         idStudentField.setText(String.valueOf(idNo));
         idStudentField.setVisible(false);
         
-        model = (DefaultTableModel) notlarTable.getModel();
+        model2 = (DefaultTableModel) notlarTable.getModel();
         ogrencidersleriGoruntule(idNo);
         
         model = (DefaultTableModel) dersSecimTable.getModel();
@@ -34,14 +34,14 @@ public class FOgrenci extends javax.swing.JFrame {
     }
     
     public void ogrencidersleriGoruntule(int idNo) {
-        model.setRowCount(0);
+        model2.setRowCount(0);
         ArrayList<Ders> dersList = new ArrayList<Ders>();
         dersList = yonetim.ogrencininDersleriGoruntule(idNo);
         if (dersList != null ) {
             
             for (Ders ders : dersList) {
                 Object[] eklenecek = {ders.getIdSection(),idNo,ders.getLectureName(),ders.getMidterm(),ders.getFinali(),ders.getMean(),ders.getGrade()};
-                model.addRow(eklenecek);
+                model2.addRow(eklenecek);
             }
         }
     }
@@ -86,9 +86,9 @@ public class FOgrenci extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        danismanUlasButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        DuyurularButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        CikisYapButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         dersSecimTable = new javax.swing.JTable();
@@ -160,13 +160,14 @@ public class FOgrenci extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("ÖGRENCİ İSLEMLERİ");
 
-        danismanUlasButton.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
-        danismanUlasButton.setForeground(new java.awt.Color(0, 102, 153));
-        danismanUlasButton.setText("DANISMANA ULAS");
-
-        jButton2.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 102, 153));
-        jButton2.setText("DUYURULAR");
+        DuyurularButton.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        DuyurularButton.setForeground(new java.awt.Color(0, 102, 153));
+        DuyurularButton.setText("DUYURULAR");
+        DuyurularButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DuyurularButtonActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(0, 102, 153));
@@ -177,20 +178,32 @@ public class FOgrenci extends javax.swing.JFrame {
             }
         });
 
+        CikisYapButton.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 14)); // NOI18N
+        CikisYapButton.setForeground(new java.awt.Color(0, 102, 153));
+        CikisYapButton.setText("ÇIKIŞ YAP");
+        CikisYapButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CikisYapButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(danismanUlasButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CikisYapButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(DuyurularButton, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,12 +211,13 @@ public class FOgrenci extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(danismanUlasButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(DuyurularButton, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(CikisYapButton)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ana Sayfa", jPanel1);
@@ -698,6 +712,13 @@ public class FOgrenci extends javax.swing.JFrame {
         int idSection = yonetim.idSectionAta();
         Ders ders = new Ders(idSection,idNo,idLectures);
         ogrenci.dersSec(ders);
+        model2 = (DefaultTableModel) notlarTable.getModel();
+        secilebilecekDersler(idNo);
+        int rows = model2.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--){
+                model2.removeRow(i); 
+            }
+        ogrencidersleriGoruntule(idNo);
     }//GEN-LAST:event_dersKayitButtonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -810,6 +831,18 @@ public class FOgrenci extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_kayitAktiflestirButoonActionPerformed
 
+    private void DuyurularButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuyurularButtonActionPerformed
+        FDuyurular fDuyurular = new FDuyurular();
+        fDuyurular.setVisible(true);
+        
+    }//GEN-LAST:event_DuyurularButtonActionPerformed
+
+    private void CikisYapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CikisYapButtonActionPerformed
+        FGiris fGiris = new FGiris();
+        this.setVisible(false);
+        fGiris.setVisible(true);
+    }//GEN-LAST:event_CikisYapButtonActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -820,9 +853,10 @@ public class FOgrenci extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CikisYapButton;
+    private javax.swing.JButton DuyurularButton;
     private javax.swing.JTextField GANOField;
     private javax.swing.JTextField contentField;
-    private javax.swing.JButton danismanUlasButton;
     private javax.swing.JTextField departmentField;
     private javax.swing.JTextField dersAdiField;
     private javax.swing.JButton dersKayitButton;
@@ -835,7 +869,6 @@ public class FOgrenci extends javax.swing.JFrame {
     private javax.swing.JTextField idField;
     private javax.swing.JTextField idStudentField;
     private javax.swing.JTextField instutationField;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;

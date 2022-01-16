@@ -31,6 +31,7 @@ public class FMemurKaydol extends javax.swing.JFrame {
         kayitButton = new javax.swing.JButton();
         mesaj = new javax.swing.JLabel();
         employmentField = new javax.swing.JTextField();
+        GeriButton = new javax.swing.JButton();
 
         jLabel5.setText("TC Kimlik");
 
@@ -39,21 +40,27 @@ public class FMemurKaydol extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(350, 400));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("MEMUR KAYIT EKRANI");
 
         idNoField.setEditable(false);
 
+        idNoLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         idNoLabel.setText("ID");
 
+        nameSurnameLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         nameSurnameLabel.setText("Isim Soyisim");
 
+        tcNoLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         tcNoLabel.setText("TC Kimlik");
 
+        passwordLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         passwordLabel.setText("Sifre");
 
+        employmentLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         employmentLabel.setText("İş Gorev");
 
+        kayitButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         kayitButton.setText("Kayıt Olustur");
         kayitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,31 +71,46 @@ public class FMemurKaydol extends javax.swing.JFrame {
         mesaj.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         mesaj.setForeground(new java.awt.Color(0, 204, 153));
 
+        GeriButton.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        GeriButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        GeriButton.setForeground(new java.awt.Color(51, 51, 51));
+        GeriButton.setText("Geri");
+        GeriButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GeriButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mesaj, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GeriButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameSurnameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(idNoLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tcNoLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(passwordLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(employmentLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(kayitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(passwordField)
-                            .addComponent(nameSurnameField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(idNoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tcNoField, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                            .addComponent(employmentField, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))))
-                .addGap(81, 81, 81))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(mesaj, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(nameSurnameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(idNoLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(tcNoLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(passwordLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(employmentLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(kayitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(passwordField)
+                                        .addComponent(nameSurnameField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(idNoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(tcNoField, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                        .addComponent(employmentField, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))))
+                            .addComponent(jLabel1))))
+                .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +141,9 @@ public class FMemurKaydol extends javax.swing.JFrame {
                 .addComponent(kayitButton)
                 .addGap(18, 18, 18)
                 .addComponent(mesaj, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(GeriButton)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,6 +188,12 @@ public class FMemurKaydol extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_kayitButtonActionPerformed
 
+    private void GeriButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeriButtonActionPerformed
+        FGiris fGiris = new FGiris();
+        this.setVisible(false);
+        fGiris.setVisible(true);
+    }//GEN-LAST:event_GeriButtonActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -173,6 +203,7 @@ public class FMemurKaydol extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GeriButton;
     private javax.swing.JTextField employmentField;
     private javax.swing.JLabel employmentLabel;
     private javax.swing.JTextField idNoField;

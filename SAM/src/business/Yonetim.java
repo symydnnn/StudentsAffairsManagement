@@ -33,7 +33,6 @@ public class Yonetim extends Birimler{
         ArrayList<Duyuru> duyuruList = new ArrayList<Duyuru>();
         ArrayList a = new ArrayList();
         if(con==null){
-            System.out.println("Duyurular Yukleniyor..");
             con = db.BaglantiKontrol();
         }
         try{

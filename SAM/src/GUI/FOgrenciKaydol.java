@@ -37,37 +37,47 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
         passwordField = new javax.swing.JPasswordField();
         departmentCB = new javax.swing.JComboBox<>();
         facultyCB = new javax.swing.JComboBox<>();
+        GeriButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(350, 400));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("OGRENCİ KAYIT EKRANI");
 
         idNoField.setEditable(false);
 
         classCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
 
+        idNoLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         idNoLabel.setText("ID");
 
+        nameSurnameLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         nameSurnameLabel.setText("Isim Soyisim");
 
+        tcNoLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         tcNoLabel.setText("TC Kimlik");
 
+        departmentLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         departmentLabel.setText("Bolum");
 
+        facultyLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         facultyLabel.setText("Fakülte");
 
+        classLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         classLabel.setText("Sınıf");
 
         semesterCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" }));
 
+        semesterLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         semesterLabel.setText("Dönem");
 
+        passwordLabel.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         passwordLabel.setText("Sifre");
 
+        kayitButton.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         kayitButton.setText("Kayıt Olustur");
         kayitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,12 +89,22 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
 
         facultyCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Teknoloji Fakultesi", "Muhendislik Fakultesi", "Ataturk Egitim Fakultesi", "Saglik Bilimleri Fakultesi", "Tıp Fakultesi" }));
 
+        GeriButton.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        GeriButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        GeriButton.setForeground(new java.awt.Color(51, 51, 51));
+        GeriButton.setText("Geri");
+        GeriButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GeriButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,12 +127,19 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
                             .addComponent(passwordField)
                             .addComponent(departmentCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(facultyCB, 0, 189, Short.MAX_VALUE)))
-                    .addComponent(mesaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(mesaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(62, 62, 62))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(GeriButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +182,9 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
                 .addComponent(kayitButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mesaj, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(GeriButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,7 +195,7 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
         );
 
         pack();
@@ -200,6 +229,12 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
             mesaj.setText("Beklenmeyen bir hata oluştu. Tekrar deneyiniz.");
         }
     }//GEN-LAST:event_kayitButtonActionPerformed
+
+    private void GeriButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeriButtonActionPerformed
+        FGiris fGiris = new FGiris();
+        this.setVisible(false);
+        fGiris.setVisible(true);
+    }//GEN-LAST:event_GeriButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,6 +279,7 @@ public class FOgrenciKaydol extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GeriButton;
     private javax.swing.JComboBox<String> classCB;
     private javax.swing.JLabel classLabel;
     private javax.swing.JComboBox<String> departmentCB;

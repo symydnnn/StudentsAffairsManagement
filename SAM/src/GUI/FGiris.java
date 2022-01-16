@@ -370,20 +370,28 @@ public class FGiris extends javax.swing.JFrame {
 
     private void GirisYapOgretmenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GirisYapOgretmenButtonActionPerformed
         mesajOgretmen.setText("");
-        
+        int idNo = 0;
         String tcKimlik = TCKimlikOgretmenField.getText();
-        int idNo = Integer.parseInt(tcKimlik);
         String parola = new String(OgretmenPasswordField.getPassword());
+        int u = tcKimlik.length();
         
-        boolean tcgirisbasarili = ogretmen.girisYap(tcKimlik,parola);
-        boolean idgirisbasarili = ogretmen.girisYap(idNo, parola);
-        if (tcgirisbasarili ){
-            idNo = ogretmen.ogretmenNo(tcKimlik);
+        if(u<=10){
+            idNo = Integer.parseInt(tcKimlik);
+            boolean idgirisbasarili = ogretmen.girisYap(idNo, parola);
+            if(idgirisbasarili){
             FOgretmen fOgretmen = new FOgretmen(idNo);
             setVisible(false);
             fOgretmen.setVisible(true);
+            }
+            else {
+            mesajOgretmen.setForeground(Color.RED);
+            mesajOgretmen.setText("Giriş Başarısız.");
+            }
         }
-        else if(idgirisbasarili){
+        boolean tcgirisbasarili = ogretmen.girisYap(tcKimlik,parola);
+        
+        if (tcgirisbasarili ){
+            idNo = ogretmen.ogretmenNo(tcKimlik);
             FOgretmen fOgretmen = new FOgretmen(idNo);
             setVisible(false);
             fOgretmen.setVisible(true);
@@ -391,7 +399,6 @@ public class FGiris extends javax.swing.JFrame {
         else {
             mesajOgretmen.setForeground(Color.RED);
             mesajOgretmen.setText("Giriş Başarısız.");
-            
         }
     }//GEN-LAST:event_GirisYapOgretmenButtonActionPerformed
 
@@ -401,21 +408,28 @@ public class FGiris extends javax.swing.JFrame {
 
     private void GirisYapOgrenciButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GirisYapOgrenciButtonActionPerformed
         mesajOgrenci.setText("");
-        
+        int idNo = 0;
         String tcKimlik = TCKimlikOgrenciField.getText();
-        int idNo = Integer.parseInt(tcKimlik);
         String parola = new String(OgrenciPasswordField.getPassword());
+        int u = tcKimlik.length();
         
-        boolean tcgirisbasarili = ogrenci.girisYap(tcKimlik,parola);
-        boolean idgirisbasarili = ogrenci.girisYap(idNo, parola);
-        
-        if (tcgirisbasarili ){
-            idNo = ogrenci.ogrenciNo(tcKimlik);
+        if(u<=10){
+            idNo = Integer.parseInt(tcKimlik);
+            boolean idgirisbasarili = ogrenci.girisYap(idNo, parola);
+            if(idgirisbasarili){
             FOgrenci fOgrenci = new FOgrenci(idNo);
             setVisible(false);
             fOgrenci.setVisible(true);
+            }
+            else {
+            mesajOgrenci.setForeground(Color.RED);
+            mesajOgrenci.setText("Giriş Başarısız.");
+            }
         }
-        else if(idgirisbasarili){
+        boolean tcgirisbasarili = ogrenci.girisYap(tcKimlik,parola);
+        
+        if (tcgirisbasarili ){
+            idNo = ogrenci.ogrenciNo(tcKimlik);
             FOgrenci fOgrenci = new FOgrenci(idNo);
             setVisible(false);
             fOgrenci.setVisible(true);
@@ -449,21 +463,28 @@ public class FGiris extends javax.swing.JFrame {
 
     private void GirisYapMemurButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GirisYapMemurButtonActionPerformed
         mesajMemur.setText("");
-
+        int idNo = 0;
         String tcKimlik = TCKimlikMemurField.getText();
-        int idNo = Integer.parseInt(tcKimlik);
         String parola = new String(MemurPasswordField.getPassword());
-
-        boolean tcgirisbasarili = memur.girisYap(tcKimlik,parola);
-        boolean idgirisbasarili = memur.girisYap(idNo, parola);
-
-        if (tcgirisbasarili ){
-            idNo = memur.memurNo(tcKimlik);
+        int u = tcKimlik.length();
+        
+        if(u<=10){
+            idNo = Integer.parseInt(tcKimlik);
+            boolean idgirisbasarili = memur.girisYap(idNo, parola);
+            if(idgirisbasarili){
             FMemur fMemur = new FMemur(idNo);
             setVisible(false);
             fMemur.setVisible(true);
+            }
+            else {
+            mesajMemur.setForeground(Color.RED);
+            mesajMemur.setText("Giriş Başarısız.");
+            }
         }
-        else if(idgirisbasarili){
+        boolean tcgirisbasarili = memur.girisYap(tcKimlik,parola);
+        
+        if (tcgirisbasarili ){
+            idNo = memur.memurNo(tcKimlik);
             FMemur fMemur = new FMemur(idNo);
             setVisible(false);
             fMemur.setVisible(true);

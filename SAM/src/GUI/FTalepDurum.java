@@ -2,10 +2,12 @@
 package GUI;
 
 import business.OgrenciYonetim;
-import entities.Ders;
 import entities.Ogrenci;
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FTalepDurum extends javax.swing.JFrame {
@@ -30,7 +32,7 @@ public class FTalepDurum extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         talepTable = new javax.swing.JTable();
         ExitButton = new javax.swing.JButton();
-        ExitButton1 = new javax.swing.JButton();
+        belgeIndırButton = new javax.swing.JButton();
         idLabel = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
@@ -70,12 +72,12 @@ public class FTalepDurum extends javax.swing.JFrame {
             }
         });
 
-        ExitButton1.setBackground(java.awt.SystemColor.controlHighlight);
-        ExitButton1.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
-        ExitButton1.setText("Belgeyi İndir");
-        ExitButton1.addActionListener(new java.awt.event.ActionListener() {
+        belgeIndırButton.setBackground(java.awt.SystemColor.controlHighlight);
+        belgeIndırButton.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
+        belgeIndırButton.setText("Belgeyi İndir");
+        belgeIndırButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitButton1ActionPerformed(evt);
+                belgeIndırButtonActionPerformed(evt);
             }
         });
 
@@ -90,7 +92,7 @@ public class FTalepDurum extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(ExitButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(belgeIndırButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -99,10 +101,11 @@ public class FTalepDurum extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ExitButton)
-                    .addComponent(ExitButton1)
-                    .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ExitButton)
+                        .addComponent(belgeIndırButton)))
                 .addContainerGap())
         );
 
@@ -125,20 +128,26 @@ public class FTalepDurum extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
-        setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_ExitButtonActionPerformed
 
-    private void ExitButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButton1ActionPerformed
+    private void belgeIndırButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_belgeIndırButtonActionPerformed
         ArrayList<Ogrenci> talepList = new ArrayList<Ogrenci>();
         int idNo = Integer.parseInt(idLabel.getText());
         talepList = ogrenci.belgeTalepleriGoruntule(idNo);
         int row = talepTable.getSelectedRow();
         String link = talepList.get(row).getLink();
         System.out.println("Link: "+link);
+        try {
+            File file = new File(link);
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e){ 
+        } catch (NullPointerException ne){
+            JOptionPane.showMessageDialog(null,"Belge bulunamadı.", "Hata!",JOptionPane.INFORMATION_MESSAGE);
+        }
         
-        //////DOSYAYI EKRANA GETİRME /////////////////
-        
-    }//GEN-LAST:event_ExitButton1ActionPerformed
+    }//GEN-LAST:event_belgeIndırButtonActionPerformed
 
     public void talepGoruntule(int idNo) {
         model.setRowCount(0);
@@ -161,7 +170,6 @@ public class FTalepDurum extends javax.swing.JFrame {
                     model.addRow(eklenecek);
                 }
             }
-            
         }
     }
     
@@ -177,7 +185,7 @@ public class FTalepDurum extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ExitButton;
-    private javax.swing.JButton ExitButton1;
+    private javax.swing.JButton belgeIndırButton;
     private javax.swing.JLabel idLabel;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JPanel jPanel1;
