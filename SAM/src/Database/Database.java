@@ -11,7 +11,7 @@ public class Database {
     private Connection con;
     String url="jdbc:mysql://localhost:3306/schoolm";
     String user="root";
-    String pass="170420846Sa!";
+    String pass="***";
     
             
     public Connection BaglantiKontrol() {
